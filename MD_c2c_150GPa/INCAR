@@ -1,0 +1,14 @@
+ISMEAR = 0
+IBRION = 0
+MDALGO = 0
+ISIF = 2
+SMASS = -3
+SIGMA = 0.01
+LREAL = Auto
+ALGO = VeryFast
+PREC = F
+ISYM = 0
+TEBEG = 0
+NSW = 50
+POTIM = 1.0
+NCORE = 2
