@@ -1,0 +1,24 @@
+# Get Number of atoms in simulation (shoulb be 192 for vasprun.xml)
+awk '{if($1 == "<atoms>") print $2;}' vasprun.xml
+
+
+# Get all lines after line with 'positions'
+grep -A 192 'positions' vasprun.xml | awk '{print $2,$3,$4}'
+
+
+# Get all lines after line with with 'forces'
+grep -A 192 'forces' vasprun.xml | awk '{print $2,$3,$4}'
+
+
+# Get the atom - element e.g. H (Hydrogen)
+grep -A 192 '>atomtype' vasprun.xml | awk -F':' '{split($1,subfield,"");print subfield[12] }' | tail -n +3
+
+
+TODO:
+# Get energies for each timestep
+
+# Get lattice constants
+
+# Get energies of isolated atoms (e.g. e_0_Hydrogen)
+
+# concatenate all the needed values to a file format identical to .xyz (e.g. train.xyz)
