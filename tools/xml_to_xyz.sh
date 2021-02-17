@@ -71,10 +71,16 @@ do
     do
         echo ${atom_type_array[$j]} ${pos_array[${i}*${natom}*3+${j}*3]} ${pos_array[${i}*${natom}*3+${j}*3+1]} \
         ${pos_array[${i}*${natom}*3+${j}*3+2]} ${for_array[${i}*${natom}*3+${j}*3]} ${for_array[${i}*${natom}*3+${j}*3+1]} \
-        ${for_array[${i}*${natom}*3+${j}*3+2]} >> $outfile
+        ${for_array[${i}*${natom}*3+${j}*3+2]} " 0.00000000" >> $outfile
     done
 
 done
+
+#Lattice="20.0 0.0 0.0 0.0 20.0 0.0 0.0 0.0 20.0" Properties=species:S:1:pos:R:3:forces:R:3:energies:R:1 Energie=3.21 free_Energie=3.21 pbc="T T T"
+echo "1"  >> $outfile
+echo "Lattice=$lattice Properties=species:S:1:pos:R:3:forces:R:3:energies:R:1 Energie=3.21 free_Energie=3.21 pbc=\"T T T\"" >> $outfile
+echo "H        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       3.21000000" >> $outfile
+
 
 # Write the output to outfile, just a template and not for further use
 # for i in `seq 1 1 $nsteps`
