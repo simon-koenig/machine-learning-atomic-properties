@@ -21,17 +21,18 @@ startline=`grep -m1 -n velocities vasprun.xml | awk '{print substr($1,1,length($
 lattice=`grep  -A 3 -m 2 \"basis\" $infile | awk '{print$2,$3,$4}' | tail -n+2 | head -n+3`
 
 # Get the atom - element e.g. H (Hydrogen)
-atom_type=`grep -A $natom '>atomtype' $infile | awk -F':' '{split($1,subfield,"");print subfield[12] }' | tail -n +3`
+natompo=`echo $natom"+1" | bc -l`
+atom_type=`grep -A $natompo '>atomtype' $infile | awk -F':' '{split($1,subfield,"");print subfield[12] }' | tail -n +3`
 
 # Get all lines after line with 'positions', just the coordinates without text
 # Don´t know how to implement startline
-positions=`tail -n $startline vasprun.xml | grep  -A  $natom 'positions' $infile | sed -e '/positions/,+d' | awk '{print $2,$3,$4}'`
+natompt=`echo $natom"+2" | bc -l`
+#positions=`tail -n $startline vasprun.xml | grep  -A  $natom 'positions' $infile | sed -e '/positions/,+d' | awk '{print $2,$3,$4}'`
+positions=`tail -n $startline vasprun.xml | grep  -B  $natompt 'forces' $infile | sed -e '/forces/,+d' | awk '{print $2,$3,$4}'`
 
 # Get all lines after line with 'forces', just the coordinates without text
 # Don´t know how to implement startline
 forces=`tail -n $startline vasprun.xml | grep  -A  $natom 'forces' $infile | sed -e '/forces/,+d' | awk '{print $2,$3,$4}'`
-
-
 
 
 echo "Read number of MD steps from " $infile " infile. nsteps = " $nsteps
@@ -44,23 +45,29 @@ pos_array=( $positions )
 for_array=( $forces )
 atom_type_array=( $atom_type )
 
+#echo "writing atom type"
+#echo $atom_type
+
 
 
 # Write the output to outfile
 # Outfile doesn´t resemble the .xml file. Arrays contain correct values(except
 # pos_array is too long by one step).
 
-for i in `seq 0 1 $nsteps`
+natommo=`echo $natom"-1" | bc -l`
+nstepsmo=`echo $nsteps"-1" | bc -l`
+
+for i in `seq 0 1 $nstepsmo`
 do
 
     echo $natom >> $outfile
     echo "Lattice=$lattice Properties=species:S:1:pos:R:3:
     forces:R:3:energies:R:1 Energie=dummy_energy pbc=\"T T T\"" >> $outfile
-    for j in `seq 0 1 ${natom-1}`
+    for j in `seq 0 1 $natommo`
     do
-        echo ${atom_type_array[$j]} ${pos_array[${i}*${natom}+${j}*3]} ${pos_array[${i}*${natom}+${j}*3+1]} \
-        ${pos_array[${i}*${natom}+${j}*3+2]} ${for_array[${i}*${natom}+${j}*3]} ${for_array[${i}*${natom}+${j}*3+1]} \
-        ${for_array[${i}*${natom}+${j}*3+2]} >> $outfile
+        echo ${atom_type_array[$j]} ${pos_array[${i}*${natom}*3+${j}*3]} ${pos_array[${i}*${natom}*3+${j}*3+1]} \
+        ${pos_array[${i}*${natom}*3+${j}*3+2]} ${for_array[${i}*${natom}*3+${j}*3]} ${for_array[${i}*${natom}*3+${j}*3+1]} \
+        ${for_array[${i}*${natom}*3+${j}*3+2]} >> $outfile
     done
 
 done
