@@ -18,7 +18,7 @@ startline=`grep -m1 -n velocities vasprun.xml | awk '{print substr($1,1,length($
 #forces_1=`tail -n +$startline $infile | grep -A  $natom 'forces' | awk '{print $2,$3,$4}'`
 
 # Get the 9 lattice constants
-lattice=`grep  -A 3 -m 2 \"basis\" $infile | awk '{print$2,$3,$4}' | tail -n+2 | head -n+3`
+lattice=`grep  -A 3 -m 2 \"basis\" $infile | awk '{print$2,$3,$4}' | tail -n+2 | head -n+3 | sed ':a;N;$!ba;s/\n/ /g' `
 
 # Get the atom - element e.g. H (Hydrogen)
 natompo=`echo $natom"+1" | bc -l`
@@ -35,12 +35,16 @@ positions=`tail -n $startline vasprun.xml | grep  -B  $natompt 'forces' $infile 
 forces=`tail -n $startline vasprun.xml | grep  -A  $natom 'forces' $infile | sed -e '/forces/,+d' | awk '{print $2,$3,$4}'`
 
 
+energies=`grep  -A  5 'eentropy' $infile | grep "e_0_energy" | awk '{print $3}'`
+
+
 echo "Read number of MD steps from " $infile " infile. nsteps = " $nsteps
 echo "Read number of atoms from " $infile " infile. natoms = " $natom
 echo "Read line number at which the simulationstarts from " $infile "infile = " $startline
 echo "Read lattice constants from " $infile "infile." "lattice constants = " $lattice
 
 # Transfer positions, forces and atom_types to arrays for better indexing possibilities
+energies_array=( $energies )
 pos_array=( $positions )
 for_array=( $forces )
 atom_type_array=( $atom_type )
@@ -59,10 +63,10 @@ nstepsmo=`echo $nsteps"-1" | bc -l`
 
 for i in `seq 0 1 $nstepsmo`
 do
+#    echo  ${energies_array[${i}*2+1]}
 
     echo $natom >> $outfile
-    echo "Lattice=$lattice Properties=species:S:1:pos:R:3:
-    forces:R:3:energies:R:1 Energie=dummy_energy pbc=\"T T T\"" >> $outfile
+    echo "Lattice=$lattice Properties=species:S:1:pos:R:3:forces:R:3:energies:R:1 Energie=${energies_array[${i}*2+1]} pbc=\"T T T\"" >> $outfile
     for j in `seq 0 1 $natommo`
     do
         echo ${atom_type_array[$j]} ${pos_array[${i}*${natom}*3+${j}*3]} ${pos_array[${i}*${natom}*3+${j}*3+1]} \
