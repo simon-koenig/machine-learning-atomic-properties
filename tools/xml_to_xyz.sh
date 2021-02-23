@@ -18,7 +18,7 @@ startline=`grep -m1 -n velocities vasprun.xml | awk '{print substr($1,1,length($
 #forces_1=`tail -n +$startline $infile | grep -A  $natom 'forces' | awk '{print $2,$3,$4}'`
 
 # Get the 9 lattice constants
-lattice=`grep  -A 3 -m 2 \"basis\" $infile | awk '{print$2,$3,$4}' | tail -n+2 | head -n+3 | sed ':a;N;$!ba;s/\n/ /g' `
+lattice=`grep  -A 3 -m 2 \"basis\" $infile | awk '{print$2,$3,$4}' | tail -n+2 | head -n+3 | tr '\n' ' '`
 
 # Get the atom - element e.g. H (Hydrogen)
 natompo=`echo $natom"+1" | bc -l`
@@ -66,7 +66,7 @@ do
 #    echo  ${energies_array[${i}*2+1]}
 
     echo $natom >> $outfile
-    echo "Lattice=$lattice Properties=species:S:1:pos:R:3:forces:R:3:energies:R:1 Energie=${energies_array[${i}*2+1]} pbc=\"T T T\"" >> $outfile
+    echo "Lattice=\"$lattice\" Properties=species:S:1:pos:R:3:forces:R:3:energies:R:1 energy=${energies_array[${i}*2+1]} pbc=\"T T T\"" >> $outfile
     for j in `seq 0 1 $natommo`
     do
         echo ${atom_type_array[$j]} ${pos_array[${i}*${natom}*3+${j}*3]} ${pos_array[${i}*${natom}*3+${j}*3+1]} \
@@ -78,7 +78,7 @@ done
 
 #Lattice="20.0 0.0 0.0 0.0 20.0 0.0 0.0 0.0 20.0" Properties=species:S:1:pos:R:3:forces:R:3:energies:R:1 Energie=3.21 free_Energie=3.21 pbc="T T T"
 echo "1"  >> $outfile
-echo "Lattice=$lattice Properties=species:S:1:pos:R:3:forces:R:3:energies:R:1 Energie=3.21 free_Energie=3.21 pbc=\"T T T\"" >> $outfile
+echo "Lattice=\"$lattice\" Properties=species:S:1:pos:R:3:forces:R:3:energies:R:1 energy=3.21 free_Energie=3.21 pbc=\"T T T\"" >> $outfile
 echo "H        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       3.21000000" >> $outfile
 
 
