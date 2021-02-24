@@ -20,7 +20,6 @@ class GAPModel(object):
     from the given dictionary to  arguments for the 'train' method.
     This is done by indexing the dictionary by the name of the needed parameter.
     """
-    print('hello world')
 
     def __init__(self):
         pass
@@ -147,3 +146,65 @@ class distance_2b(object):
 
     def get_parameter_string(self):
         return self.param_string
+
+
+class Split(object):
+    """Splitting up data into train and test data in whichever percentage
+    wanted. Recommended is a 80:20 split."""
+
+    # data_file = .xyz file
+    # train_percentage float between 0 and 1
+    def __init__(self, data_file, train_percentage):
+        self.data = data_file
+        self.train_percentage = train_percentage
+        self.test_percentage = 1 - train_percentage
+
+    def get_percentages(self):
+        str = (f" Percentile of training data: {self.train_percentage} | "
+               f" Percentile of test data: {self.test_percentage} ")
+        return str
+    # Performs the split and returns a file containing the training data and
+    # a file containing the test data.
+    # The wanted output filenames need to be passed, in order to avoid unwanted
+    # future overwriting or duplicating.
+    # train_data_file = .xyz file
+    # test_data_file = .xyz file
+
+    def split(self, train_data_file, test_data_file):
+        # Assign to self variables
+        self.train_data_xyz = train_data_file
+        self.test_data_xyz = test_data_file
+
+        # Read data that´s going to be split to atoms object for easier handle.
+        import ase.io
+        data = ase.io.read(self.data, ':')
+
+        # Randomize sampling
+        import random
+        # Take 80percent of the data as training data
+        n_train = round(len(data)*self.train_percentage)
+        train_index = random.sample(range(1, len(data)+1), n_train)
+
+        # Take 20percent of the data as test data
+        n_test = len(data)-(n_train)
+        test_index = random.sample(range(1, len(data)+1), n_test)
+
+        # Small test if splitting indices worked correctly
+        complete = train_index+test_index
+        if len(complete) == len(data):
+            train_data = [data[i-1] for i in train_index]
+            test_data = [data[i-1] for i in test_index]
+
+        self.train_data = train_data
+        self.test_data = test_data
+
+        # Write train and test data to .xyz file format because this format
+        # is needed for gap_fit and quip
+        ase.io.write(train_data_file, train_data[:])
+        ase.io.write(test_data_file, test_data[:])
+
+    def get_splitted_data_files(self):
+        return self.train_data_xyz, self.test_data_xyz
+
+    def get_splitted_data(self):
+        return self.train_data, self.test_data
