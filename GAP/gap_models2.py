@@ -96,56 +96,7 @@ class GAPModel(object):
         try:
             return self.QUIP_Prediction
         except AttributeError:
-            return ("Prediction did not work. ")
-
-
-class distance_2b(object):
-    """2b_distance descriptor
-    descriptor class takes paramters and converts them to a dictionary, which
-    is then used by the GAPModel to initialise its paramters. """
-
-    def __init__(self, cutoff, covariance_type, delta, theta_uniform,
-                 sparse_method, add_species, n_sparse):
-        self.cutoff = cutoff
-        self.covariance_type = covariance_type
-        self.delta = delta
-        self.theta_uniform = theta_uniform
-        self.sparse_method = sparse_method
-        self.add_species = add_species
-        self.n_sparse = n_sparse
-
-        p = {'cutoff': self.cutoff,
-             'covariance_type': self.covariance_type,
-             'delta': self.delta,
-             'theta_uniform': self.theta_uniform,
-             'sparse_method': self.sparse_method,
-             'add_species': self.add_species,
-             'n_sparse': self.n_sparse}
-        self.param_dict = p
-
-        param_string = (f" distance_2b cutoff = {p['cutoff']}"
-                        f" covariance_type = {p['covariance_type']}"
-                        f" delta = {p['delta']}"
-                        f" theta_uniform = {p['theta_uniform']}"
-                        f" sparse_method = {p['sparse_method']}"
-                        f" add_species = {p['add_species']}"
-                        f" n_sparse = {p['n_sparse']}")
-
-        print(param_string)
-
-        self.param_string = param_string
-
-        descriptor_type = 'distance_2b'
-        self.descriptor_type = descriptor_type
-
-    def get_descriptor_type(self):
-        return self.descriptor_type
-
-    def get_parameter_dict(self):
-        return self.param_dict
-
-    def get_parameter_string(self):
-        return self.param_string
+            return ("Prediction did not work.")
 
 
 class Split(object):
@@ -176,8 +127,12 @@ class Split(object):
         self.test_data_xyz = test_data_file
 
         # Read data that´s going to be split to atoms object for easier handle.
+        # Read all atoms, except the last one, because this is the isolated atom.
+        # The isolated energy is then put at the end of the training data.
+        # TODO: this is hardcoded now, for only one atom species, can be replaced
+        # by variable of number of atom species
         import ase.io
-        data = ase.io.read(self.data, ':')
+        data = ase.io.read(self.data, ':-1')
 
         # Randomize sampling
         import random
@@ -189,17 +144,23 @@ class Split(object):
         n_test = len(data)-(n_train)
         test_index = random.sample(range(1, len(data)+1), n_test)
 
+        # Get isolated_atom to then add to the end of training data.
+        # TODO: This is hardcoded, but can be replaced by variable number
+        # number of occuring atom types.
+        isolated_atom = ase.io.read(self.data, '-1')
+
         # Small test if splitting indices worked correctly
         complete = train_index+test_index
         if len(complete) == len(data):
-            train_data = [data[i-1] for i in train_index]
+            train_data = [data[i-1] for i in train_index] + [isolated_atom]
             test_data = [data[i-1] for i in test_index]
 
         self.train_data = train_data
         self.test_data = test_data
 
         # Write train and test data to .xyz file format because this format
-        # is needed for gap_fit and quip
+        # is needed for gap_fit and quip.
+
         ase.io.write(train_data_file, train_data[:])
         ase.io.write(test_data_file, test_data[:])
 
