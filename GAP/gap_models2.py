@@ -30,17 +30,20 @@ class GAPModel(object):
     # output file contains the trained GAP Potential.
     # the descriptor_type needs to be passed, in order to perform the right
     # shell command.
+    # Sigma is the default regularisation corresponding to energy, force,
+    # virial, hessian
     # GAP_potentialXML is created and contains the trained potential =.xml file
     # params = dict
     # descriptor_type = string (for example: distance_2b)
     # training_data = .xyz file
+    # sigma = string, 4 integers  larger than zero e.g.: 0.1 0.2 0.2 0.0
 
-    def train(self, *parameter_string, training_data, GAP_potential,):
+    def train(self, *parameter_string, training_data, GAP_potential, sigma):
         cmd = (f" gap_fit energy_parameter_name = energy "
                f" force_parameter_name = forces do_copy_at_file = F "
                f" sparse_separate_file = T gp_file = {GAP_potential}"
                f" at_file = \'{training_data}\' "
-               f" default_sigma = {{0.008 0.04 0 0}}"
+               f" default_sigma = {{ {sigma} }}"
                f" gap = {{ ")
 
         if len(parameter_string) == 1:
