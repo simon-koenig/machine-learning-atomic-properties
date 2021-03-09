@@ -16,7 +16,7 @@ class QualityPlot(object):
     # plt.subplot()
     # axis = numpy.ndarray
     def energies_on_energies(self, real_values, predicted_values, axis,
-                             label="Energy-Plot"):
+                             title="Energy-Plot"):
         # Read data, skip the last one since this is the single atom energy
         # TODO: -1 is hardcoded, should be -n where n is the number
         # of atom_types
@@ -32,7 +32,7 @@ class QualityPlot(object):
         axis.scatter(real_energies[:], predicted_energies[:])
 
         # Improve look
-        axis.set_title(label)
+        axis.set_title(title)
         energy_array = np.array(real_energies + predicted_energies)
         lim = (energy_array.min(), energy_array.max())
         axis.set_xlim(lim)
@@ -49,7 +49,7 @@ class QualityPlot(object):
         # plt.subplot()
         # axis = numpy.ndarray
 
-    def forces_on_forces(self, real_values, predicted_values, axis, label="Force-Plot"):
+    def forces_on_forces(self, real_values, predicted_values, axis, title="Force-Plot"):
         real_atoms = read(real_values, ':')
         predicted_atoms = read(predicted_values, ':')
 
@@ -65,7 +65,7 @@ class QualityPlot(object):
         # Make scatter plot
         axis.scatter(real_forces[:], predicted_forces)
         # Improve look
-        axis.set_title(label)
+        axis.set_title(title)
         force_array = np.array(real_forces + predicted_forces)
         lim = (force_array.min(), force_array.max())
         axis.set_xlim(lim)
