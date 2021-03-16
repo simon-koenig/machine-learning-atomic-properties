@@ -1,0 +1,450 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{ynt/global//global/global}
+    \entry{nobel-kohn}{misc}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=5d41414fe0631332e20a859e66a25627}{%
+           family={Kohn},
+           familyi={K\bibinitperiod},
+           given={W.},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {The Nobel Foundation}%
+      }
+      \strng{namehash}{5d41414fe0631332e20a859e66a25627}
+      \strng{fullhash}{5d41414fe0631332e20a859e66a25627}
+      \strng{bibnamehash}{5d41414fe0631332e20a859e66a25627}
+      \strng{authorbibnamehash}{5d41414fe0631332e20a859e66a25627}
+      \strng{authornamehash}{5d41414fe0631332e20a859e66a25627}
+      \strng{authorfullhash}{5d41414fe0631332e20a859e66a25627}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Nobel Lecture: Electronic structure of matter—wave functions and density functionals}
+      \field{year}{1999}
+    \endentry
+    \entry{GAP-info-theory}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=99e8c42965ec01aec3921af3e8ecd658}{%
+           family={MacKay},
+           familyi={M\bibinitperiod},
+           given={David\bibnamedelima J.C.},
+           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Cambridge University}%
+      }
+      \list{publisher}{1}{%
+        {Cambridge University Press}%
+      }
+      \strng{namehash}{99e8c42965ec01aec3921af3e8ecd658}
+      \strng{fullhash}{99e8c42965ec01aec3921af3e8ecd658}
+      \strng{bibnamehash}{99e8c42965ec01aec3921af3e8ecd658}
+      \strng{authorbibnamehash}{99e8c42965ec01aec3921af3e8ecd658}
+      \strng{authornamehash}{99e8c42965ec01aec3921af3e8ecd658}
+      \strng{authorfullhash}{99e8c42965ec01aec3921af3e8ecd658}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Information Theory, Inference, and Learning Algorithms}
+      \field{year}{2003}
+    \endentry
+    \entry{dft-hutter}{misc}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=7b2538ddeb517075f48007298f6e5cd3}{%
+           family={Hutter},
+           familyi={H\bibinitperiod},
+           given={Jürg},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Physikalisch Chemisches Institut, Universität Zürich}%
+      }
+      \strng{namehash}{7b2538ddeb517075f48007298f6e5cd3}
+      \strng{fullhash}{7b2538ddeb517075f48007298f6e5cd3}
+      \strng{bibnamehash}{7b2538ddeb517075f48007298f6e5cd3}
+      \strng{authorbibnamehash}{7b2538ddeb517075f48007298f6e5cd3}
+      \strng{authornamehash}{7b2538ddeb517075f48007298f6e5cd3}
+      \strng{authorfullhash}{7b2538ddeb517075f48007298f6e5cd3}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Dichtefunktionaltheorie}
+      \field{year}{2004}
+    \endentry
+    \entry{hjorth-jensen}{misc}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=f1f1ee5e424a0bb746b54acd9e6851cf}{%
+           family={Hjorth-Jensen},
+           familyi={H\bibinithyphendelim J\bibinitperiod},
+           given={Morten},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Department of Physics, University of Oslo}%
+      }
+      \strng{namehash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \strng{fullhash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \strng{bibnamehash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \strng{authorbibnamehash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \strng{authornamehash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \strng{authorfullhash}{f1f1ee5e424a0bb746b54acd9e6851cf}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Computational Physics}
+      \field{year}{2008}
+    \endentry
+    \entry{esl2}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=e6f2bb0b43cc1f782a00b3060c88057f}{%
+           family={Trevor\bibnamedelima Hastie},
+           familyi={T\bibinitperiod\bibinitdelim H\bibinitperiod},
+           given={Jerome\bibnamedelima Friedman},
+           giveni={J\bibinitperiod\bibinitdelim F\bibinitperiod},
+           givenun=0,
+           suffix={Robert\bibnamedelima Tibshirani},
+           suffixi={R\bibinitperiod\bibinitdelim T\bibinitperiod},
+           suffixun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{e6f2bb0b43cc1f782a00b3060c88057f}
+      \strng{fullhash}{e6f2bb0b43cc1f782a00b3060c88057f}
+      \strng{bibnamehash}{e6f2bb0b43cc1f782a00b3060c88057f}
+      \strng{authorbibnamehash}{e6f2bb0b43cc1f782a00b3060c88057f}
+      \strng{authornamehash}{e6f2bb0b43cc1f782a00b3060c88057f}
+      \strng{authorfullhash}{e6f2bb0b43cc1f782a00b3060c88057f}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{series}{Springer Series in Statistics}
+      \field{title}{The Elements of Statistical Learning, Second Edition}
+      \field{year}{2008}
+    \endentry
+    \entry{GAP-2009}{article}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=59a4f3b5aaad7a270890b1d01422b0e3}{%
+           family={Bartók},
+           familyi={B\bibinitperiod},
+           given={Albert\bibnamedelima P.},
+           giveni={A\bibinitperiod\bibinitdelim P\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4e72034f1e448e616e565e1615041da1}{%
+           family={Payne},
+           familyi={P\bibinitperiod},
+           given={Mike\bibnamedelima C.},
+           giveni={M\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6abc8eb3beac1cdef82d485e69f760df}{%
+           family={Kondor},
+           familyi={K\bibinitperiod},
+           given={Risi},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=be603172caadc7f70d99bdfee46e8141}{%
+           family={Csanyi},
+           familyi={C\bibinitperiod},
+           given={Gábor},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{3f0a1e562255c8ad5901d7521b907482}
+      \strng{fullhash}{69ad0d382f926b62581108949a22c0e2}
+      \strng{bibnamehash}{3f0a1e562255c8ad5901d7521b907482}
+      \strng{authorbibnamehash}{3f0a1e562255c8ad5901d7521b907482}
+      \strng{authornamehash}{3f0a1e562255c8ad5901d7521b907482}
+      \strng{authorfullhash}{69ad0d382f926b62581108949a22c0e2}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Gaussian approximation potentials: The accuracy of quantum mechanics, without the electrons}
+      \field{year}{2009}
+    \endentry
+    \entry{GAP-intro}{article}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=1cb530f46a9371fccc88966b0b831227}{%
+           family={P.},
+           familyi={P\bibinitperiod},
+           given={Bartók\bibnamedelima A.},
+           giveni={B\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=41f53cdd6f502b37d66b4ad44ace688a}{%
+           family={G.},
+           familyi={G\bibinitperiod},
+           given={Scány},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{e41b2a38b342336378e7ac8cb1dbf9bd}
+      \strng{fullhash}{e41b2a38b342336378e7ac8cb1dbf9bd}
+      \strng{bibnamehash}{e41b2a38b342336378e7ac8cb1dbf9bd}
+      \strng{authorbibnamehash}{e41b2a38b342336378e7ac8cb1dbf9bd}
+      \strng{authornamehash}{e41b2a38b342336378e7ac8cb1dbf9bd}
+      \strng{authorfullhash}{e41b2a38b342336378e7ac8cb1dbf9bd}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{J. Quantum Chem, 115, 1051–1057}
+      \field{title}{Gaussian Approximation Potentials: A Brief Tutorial Introduction}
+      \field{year}{2014}
+      \verb{doi}
+      \verb 10.1002/qua.24927
+      \endverb
+    \endentry
+    \entry{hands-on-ml}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=e54e6c9ce5d233c7046a00f7b3faa6c0}{%
+           family={Géron},
+           familyi={G\bibinitperiod},
+           given={Aurélien},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {O´Reilly Media, Inc. 1005 Gravenstein Highway North, Sebastopol, CA 95472}%
+      }
+      \strng{namehash}{e54e6c9ce5d233c7046a00f7b3faa6c0}
+      \strng{fullhash}{e54e6c9ce5d233c7046a00f7b3faa6c0}
+      \strng{bibnamehash}{e54e6c9ce5d233c7046a00f7b3faa6c0}
+      \strng{authorbibnamehash}{e54e6c9ce5d233c7046a00f7b3faa6c0}
+      \strng{authornamehash}{e54e6c9ce5d233c7046a00f7b3faa6c0}
+      \strng{authorfullhash}{e54e6c9ce5d233c7046a00f7b3faa6c0}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-1-491-96229-9}
+      \field{title}{Hands-On Machine Learning with Scikit-Learn and TensorFlow}
+      \field{year}{2017}
+    \endentry
+    \entry{intro-ml}{book}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=ded57eec209923f330307cf72b4a8e1d}{%
+           family={Müller},
+           familyi={M\bibinitperiod},
+           given={Andreas\bibnamedelima C.},
+           giveni={A\bibinitperiod\bibinitdelim C\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=529c7671a0173ff25261c1f04363a982}{%
+           family={Guido},
+           familyi={G\bibinitperiod},
+           given={Sarah},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {O´Reilly Media, Inc. 1005 Gravenstein Highway North, Sebastopol, CA 95472}%
+      }
+      \strng{namehash}{5e761ea2d4566696bdac17948e69202a}
+      \strng{fullhash}{5e761ea2d4566696bdac17948e69202a}
+      \strng{bibnamehash}{5e761ea2d4566696bdac17948e69202a}
+      \strng{authorbibnamehash}{5e761ea2d4566696bdac17948e69202a}
+      \strng{authornamehash}{5e761ea2d4566696bdac17948e69202a}
+      \strng{authorfullhash}{5e761ea2d4566696bdac17948e69202a}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{978-1-449-36941-5}
+      \field{title}{Introduction to Machine Learning with Python}
+      \field{year}{2017}
+    \endentry
+    \entry{toulouse}{misc}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=98787e43f1ddbbf4d2098cb04ecdfe79}{%
+           family={Toulouse},
+           familyi={T\bibinitperiod},
+           given={Julien},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{2}{%
+        {Sorbonne Université}%
+        {CNRS, Paris, France}%
+      }
+      \strng{namehash}{98787e43f1ddbbf4d2098cb04ecdfe79}
+      \strng{fullhash}{98787e43f1ddbbf4d2098cb04ecdfe79}
+      \strng{bibnamehash}{98787e43f1ddbbf4d2098cb04ecdfe79}
+      \strng{authorbibnamehash}{98787e43f1ddbbf4d2098cb04ecdfe79}
+      \strng{authornamehash}{98787e43f1ddbbf4d2098cb04ecdfe79}
+      \strng{authorfullhash}{98787e43f1ddbbf4d2098cb04ecdfe79}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Introduction to density-functional theory}
+      \field{year}{2019}
+    \endentry
+    \entry{fk2}{misc}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=7fd0a9dd12a09dd9768a98b0c87db8ad}{%
+           family={Paschen},
+           familyi={P\bibinitperiod},
+           given={Silke\bibnamedelima Bühler},
+           giveni={S\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0b53cc86108d9a285faef0f458d5b25e}{%
+           family={Mohn},
+           familyi={M\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Technische Universität, Wien}%
+      }
+      \strng{namehash}{8726bd087bc2d81e6b0ea528afce016f}
+      \strng{fullhash}{8726bd087bc2d81e6b0ea528afce016f}
+      \strng{bibnamehash}{8726bd087bc2d81e6b0ea528afce016f}
+      \strng{authorbibnamehash}{8726bd087bc2d81e6b0ea528afce016f}
+      \strng{authornamehash}{8726bd087bc2d81e6b0ea528afce016f}
+      \strng{authorfullhash}{8726bd087bc2d81e6b0ea528afce016f}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Festkörperphysik II}
+      \field{year}{2020}
+    \endentry
+    \entry{akt1}{book}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=4576526fba60f14bedfa83e8a2602b63}{%
+           family={Pitschmann},
+           familyi={P\bibinitperiod},
+           given={Mario},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Atominstitut, Technische Universität Wien}%
+      }
+      \strng{namehash}{4576526fba60f14bedfa83e8a2602b63}
+      \strng{fullhash}{4576526fba60f14bedfa83e8a2602b63}
+      \strng{bibnamehash}{4576526fba60f14bedfa83e8a2602b63}
+      \strng{authorbibnamehash}{4576526fba60f14bedfa83e8a2602b63}
+      \strng{authornamehash}{4576526fba60f14bedfa83e8a2602b63}
+      \strng{authorfullhash}{4576526fba60f14bedfa83e8a2602b63}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{extradatescope}{labelyear}
+      \field{labeldatesource}{year}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Atom-, Kern-, und Teilchenphysik I}
+      \field{year}{2020}
+    \endentry
+    \entry{hande}{online}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=f326a7143db225dda8a975fa90345287}{%
+           family={Hande},
+           familyi={H\bibinitperiod},
+           given={Toffoli},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {Department of Physics Middle East Technical University}%
+      }
+      \strng{namehash}{f326a7143db225dda8a975fa90345287}
+      \strng{fullhash}{f326a7143db225dda8a975fa90345287}
+      \strng{bibnamehash}{f326a7143db225dda8a975fa90345287}
+      \strng{authorbibnamehash}{f326a7143db225dda8a975fa90345287}
+      \strng{authornamehash}{f326a7143db225dda8a975fa90345287}
+      \strng{authorfullhash}{f326a7143db225dda8a975fa90345287}
+      \field{sortinit}{9}
+      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
+      \field{labeldatesource}{nodate}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{addendum}{accessed: 05.12.2020}
+      \field{title}{Lecture Notes on Principles of Density Functional Theory}
+      \verb{urlraw}
+      \verb http://www.physics.metu.edu.tr/~hande/teaching/741.html
+      \endverb
+      \verb{url}
+      \verb http://www.physics.metu.edu.tr/~hande/teaching/741.html
+      \endverb
+    \endentry
+    \entry{physik4}{misc}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=d8f62b8aedb4c0df429af75557bbbff6}{%
+           family={Zürich},
+           familyi={Z\bibinitperiod},
+           given={Quantum\bibnamedelimb Device\bibnamedelimb Lab\bibnamedelima ETH},
+           giveni={Q\bibinitperiod\bibinitdelim D\bibinitperiod\bibinitdelim L\bibinitperiod\bibinitdelim E\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{institution}{1}{%
+        {ETH Zürich}%
+      }
+      \strng{namehash}{d8f62b8aedb4c0df429af75557bbbff6}
+      \strng{fullhash}{d8f62b8aedb4c0df429af75557bbbff6}
+      \strng{bibnamehash}{d8f62b8aedb4c0df429af75557bbbff6}
+      \strng{authorbibnamehash}{d8f62b8aedb4c0df429af75557bbbff6}
+      \strng{authornamehash}{d8f62b8aedb4c0df429af75557bbbff6}
+      \strng{authorfullhash}{d8f62b8aedb4c0df429af75557bbbff6}
+      \field{sortinit}{9}
+      \field{sortinithash}{54047ffb55bdefa0694bbd554c1b11a0}
+      \field{labeldatesource}{nodate}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Physik IV, Einführung in die Quantenmechanik}
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

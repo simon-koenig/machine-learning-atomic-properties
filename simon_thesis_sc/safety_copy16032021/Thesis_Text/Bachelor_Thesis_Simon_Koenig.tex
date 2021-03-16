@@ -1,0 +1,146 @@
+\documentclass[11pt,twoside=true]{scrreprt}
+% !TEX TS–program = pdflatexmk
+%\documentclass[11pt,oneside]{scrreprt}
+%
+%% consider that the input encoding of all should be utf8 
+%% if you use the follwing setting, otherwise change it
+\usepackage[utf8]{inputenc}
+%\usepackage[applemac]{inputenc} %lets umlaute being typed naturally
+
+\usepackage{TUWBIDA}
+%% this style includes already some packages which have been very useful 
+%% in the last diploma or doctoral theses
+%%
+%% fontenc[T1], lmodern, microtype, babel[englisch,ngerman], graphicx, 
+%% geometry with all margins or areaset (choose what you like)
+%% mathtools, amssymb, xfrac, siunitx, booktabs,
+%% url, xcolor[table], textcomp, marvosym, pifonts, pdfpages, ragged2e, 
+%% tabularx, longtable, threeparttable, csquotes, eurosym, enumitem, 
+%% multirow, setspace, listings, scrlayer-scrpage with header/footline
+
+\raggedbottom 
+%% prevents the expansion of the text till the end of the page (if you like)
+%\setcapindent{0em} %% influences captions layout
+
+%% ===== title information ==============
+%% The title page is designed in the style file TUWBIDA.sty
+%% Only the following information has to be provided
+%% Every diploma thesis has an english and a german title
+%%
+%% german title
+\titleGER{Bachelor Arbeit Simon König}
+%% english title
+\titleENG{Bachelor Thesis Simon König}
+%% author with correct academic titles, if necessary
+\author{\textbf{Bachelor Arbeit Simon König}}
+%% provide the gender for correct title page: M...male, F...female
+\gender{M}
+%% student id (or Matrikelnummer)
+\MatrNr{01234567}
+%%
+%% supervising professor and assistents with correct titles 
+%% use \\[2ex] to separate them
+\supervisor{Prof. Dipl.-Ing. Dr.techn. \textbf{forename surname}
+\\[2ex]
+Dipl.-Ing. Dr.-Ing. \textbf{forename surname}, BSc
+}
+%% supervising institute
+\institute{Institut für YYY \\
+Forschungsbereich \\
+Technische Universität Wien \\
+Karlsplatz 13/YYY, 1040 Wien, Österreich}
+%% date
+\date{Januar 2018}
+
+%% use biblatex and biber for bibliography
+%% customize options as you like
+%% style=numeric-comp ... [1]
+%% style=authoryear ... Mang 1998 / use \textcite{} ... Mang (1998)
+%%
+
+
+\usepackage[
+backend=biber,
+style=authoryear,
+sorting=ynt
+]{biblatex}
+\addbibresource{Chapters_Bib/Quellen.bib}
+
+
+%% ===== additional packages to the ones already loaded ==============
+\usepackage{acro}
+\acsetup{only-used=true,extra-style=plain}
+
+
+
+%% ===== additional settings =============
+\setcounter{secnumdepth}{3}
+\sisetup{output-decimal-marker = {,},
+range-phrase = --,
+group-separator = {~},
+per-mode = symbol, 
+list-final-separator={ und }}
+
+\graphicspath{{Bilder/}}
+
+%% examples for useful shortcuts in German
+\newcommand{\zB}{\mbox{z.\,B.}\xspace}
+\newcommand{\Name}[1]{\textsc{#1}}
+
+\newcommand{\vKTxv}{\mathbf{v}_1^T\tilde{\mathbf{K}}_{T},_{\xi}\mathbf{v}_1}
+\newcommand{\vKTxxv}{\mathbf{v}_1^T\tilde{\mathbf{K}}_{T},_{\xi\xi}\mathbf{v}_1}
+
+
+% activate for double space between the lines (correction mode) 
+%\doublespacing
+
+\begin{document}      %% start of the document
+\maketitle        %% places the title with above information
+
+ 
+\cleardoublepage
+\selectlanguage{ngerman}  %% for german abstract
+\include{Chapters_Bib/00-Kurzfassung}      %% german abstract (about 1 page)
+
+\cleardoublepage
+\selectlanguage{english}    %% for english abstract
+\include{Chapters_Bib/00-abstract}         %% english abstract (about 1 page)
+
+%\cleardoublepage
+\selectlanguage{ngerman} 
+\pagestyle{scrheadings} 
+
+\tableofcontents
+
+
+%% now include all chapter files -- use the include-command (takes care
+%% that all not yet output floats are output before the new file)
+%%
+\include{Chapters_Bib/Einleitung}
+\include{Chapters_Bib/TheorieTeil_von_VielKoerper_SG_zur_DFT}
+\include{Chapters_Bib/Uebergangsteil_von_DFT_zu_ML_Gauss_Regression}
+\include{Chapters_Bib/Implementing_Gaussian_Process_train-predict-analyse}
+\include{Chapters_Bib/Outlook_and_Conclusion}
+
+\section{kritzelChapter}
+hjorth-jensen-try  \footcite[500]{hjorth-jensen} 
+toulouse-try \footcite[301]{toulouse}
+intro-ml-try \footcite[301]{intro-ml}
+hands-on-ml--try \footcite[301]{hands-on-ml}
+esl2-try \footcite[301]{esl2}
+
+ 
+
+
+ \printbibliography
+
+%\include{02-Grundlagen}
+%etc.
+
+%% insert bibliography, adds chapter heading with chapter number
+
+
+
+
+
+\end{document}
