@@ -57,7 +57,7 @@ class GAPModel(object):
             cmd_list = [cmd]
             for s in range(len(parameter_string)-1):
                 cmd_list.append(parameter_string[s+1])
-            cmd = (':'.join(cmd_list))+'}'
+            cmd = (' :'.join(cmd_list))+'}'
 
         if print_output is True:
             print(cmd)
@@ -115,6 +115,61 @@ class GAPModel(object):
         except AttributeError:
             return ("Prediction did not work.")
 
+    # Function to return the Root Mean Squared Error - RMSE
+    def RMSE(self, real_values, predicted_values):
+        # Get number of unique atom types, n_types
+        from ase.io import read
+        step = read(real_values, "0")
+        n_types = len(set(step.get_chemical_symbols()))
+
+        # Read in real values and predicted values
+        real_atoms = read(real_values, f":-{n_types}")
+        predicted_atoms = read(predicted_values, f":-{n_types}")
+
+        # Plot real energies on the x axis and predicted energies on the y axis
+        real_energies = [a.get_potential_energy() / len(a.get_chemical_symbols())
+                         for a in real_atoms]
+        predicted_energies = [a.get_potential_energy() / len(a.get_chemical_symbols())
+                              for a in predicted_atoms]
+        # Calculate Root Mean Squared Error (RMSE)
+        import numpy as np
+        r = np.array(real_energies)
+        p = np.array(predicted_energies)
+        RMSE = np.sqrt(np.power(np.sum(r-p), 2)/len(r))
+
+        return RMSE
+
+    # Function to return the coefficient of determination  - R2_score
+    def R2_Score(self, real_values, predicted_values):
+        # Get number of unique atom types, n_types
+        from ase.io import read
+        step = read(real_values, "0")
+        n_types = len(set(step.get_chemical_symbols()))
+
+        # Read in real values and predicted values
+        real_atoms = read(real_values, f":-{n_types}")
+        predicted_atoms = read(predicted_values, f":-{n_types}")
+
+        # Plot real energies on the x axis and predicted energies on the y axis
+        real_energies = [a.get_potential_energy() /
+                         len(a.get_chemical_symbols()) for a in real_atoms]
+        predicted_energies = [a.get_potential_energy() /
+                              len(a.get_chemical_symbols())
+                              for a in predicted_atoms]
+
+        # Calculate coefficient of determination (R2_score)
+        import numpy as np
+        r = np.array(real_energies)
+        p = np.array(predicted_energies)
+        mean = np.mean(r)
+
+        SQR = np.sum(np.power((r-p), 2))
+        SQT = np.sum(np.power((r-mean), 2))
+
+        R2_score = 1 - (SQR/SQT)
+
+        return R2_score
+
 
 class Split(object):
     """Splitting up data into train and test data in whichever percentage
@@ -146,10 +201,13 @@ class Split(object):
         # Read data that´s going to be split to atoms object for easier handle.
         # Read all atoms, except the last one, because this is the isolated atom.
         # The isolated energy is then put at the end of the training data.
-        # TODO: this is hardcoded now, for only one atom species, can be replaced
-        # by variable of number of atom species
-        import ase.io
-        data = ase.io.read(self.data, ':-1')
+        # Get number of unique atom types, n_types
+        from ase.io import read
+        step = read(self.data, "0")
+        n_types = len(set(step.get_chemical_symbols()))
+
+        # Read in Data
+        data = read(self.data, f":-{n_types}")
 
         # Randomize sampling
         import random
@@ -164,7 +222,10 @@ class Split(object):
         # Get isolated_atom to then add to the end of training data.
         # TODO: This is hardcoded, but can be replaced by variable number
         # number of occuring atom types.
-        isolated_atom = ase.io.read(self.data, '-1')
+        from ase.io import read
+        step = read(self.data, "0")
+        n_types = len(set(step.get_chemical_symbols()))
+        isolated_atom = read(self.data, f"-{n_types}")
 
         # Small test if splitting indices worked correctly
         complete = train_index+test_index
@@ -177,9 +238,9 @@ class Split(object):
 
         # Write train and test data to .xyz file format because this format
         # is needed for gap_fit and quip.
-
-        ase.io.write(train_data_file, train_data[:])
-        ase.io.write(test_data_file, test_data[:])
+        from ase.io import write
+        write(train_data_file, train_data[:])
+        write(test_data_file, test_data[:])
 
     def get_splitted_data_files(self):
         return self.train_data_xyz, self.test_data_xyz
