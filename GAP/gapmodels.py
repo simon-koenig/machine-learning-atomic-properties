@@ -135,7 +135,7 @@ class GAPModel(object):
         import numpy as np
         r = np.array(real_energies)
         p = np.array(predicted_energies)
-        RMSE = np.sqrt(np.power(np.sum(r-p), 2)/len(r))
+        RMSE = np.sqrt(np.sum(np.power(r-p, 2))/len(r))
 
         return RMSE
 
