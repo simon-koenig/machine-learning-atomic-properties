@@ -19,7 +19,7 @@ $$TODO: E=DOPPELSUMME, wie in GAP-Intro, Seite 1051$$
 Die Summe über $\alpha$ erstreckt sich über die verschiedenen Typen an Energiefunktionalen. Das sind im einfachsten Fall Zwei- oder Drei-Körper Energien, die sich durch atomare Abstände, oder Winkel zwischen den Atomen beschreiben lassen. Die Argumente dieser Energiefunktionale nennt man Deskriptoren. Deskriptoren beschreiben die Atomkonfiguration, mittels Transformation der kartesischen Koordinaten der Atome in Umgebungskoordinaten für die gesuchte lokale Energie eines Ziel-Atoms. Die Summe über $i$ läuft über alle Instanzen von Bindungs-Winkeln respektive Bindungs-Abständen. \footcite[1051]{GAP-intro}
 
 
-\section{Die Gauß Regression}
+\section{Gauss Regression, mathematically explained}
 
 \subsection{Vorraussetzungen für Gaussian Process}
 
@@ -93,10 +93,10 @@ Hier zeigt sich die die Einfachheit des Gauß´schen Modellierungs Prozesses. Zu
 
 
 
-\section{Modifikationen zur quantenmechanischen Anwendung}
+\section{Modifications of Gauss Regression and preparing for Quantum Mechanical Use}
 
 
-\subsection{Totale Energien und Kräfte}
+\subsection{Total Energies and Forces}
 
 Die Dichtefunktionaltheorie, sowie auch andere quantenmechanische Berechnungsmethoden, ermitteln Energien kompletter Systeme für eine gegebene Konfiguration. Der erklärte Gauß´sche Approximations Prozess nimmt lokale atomare Energien und Atom-Geometrien als Argumente. Lokale Energien und lokale Gradienten werden aus den quantenmechanisch berechneten Totalen Energien und ihre Totalen Gradienten abgeleitet. Die Berechnung der Kovarianz erfolgt analog zu der für lokale Energien mit zusätzlicher Summation über alle Atome des Systems. Die Analogie zur lokalen Kovarinaz-Matrix ist gegeben. \footcite[1053]{GAP-intro}
 
@@ -119,7 +119,7 @@ $$TODO: Wobei i element aus N und j element aus M, umschreiben in mathematische 
 
 
 
-\subsection{Beschränkung auf nahe Umgebung - cutoff radius}
+\subsection{Local Approximation - Cutoff Radius}
 
 Die Berechnung lokaler Energien beschränkt sich auf eine gewisse Umgebung der betrachteten Atome. Die Größe der Umgebung ist nicht eindeutig definiert und wird durch die gewünschte Genauigkeit der Ergebnisse induziert. Wird ein großes Umfeld mit einbezogen steigt der Rechenaufwand stark an, da mit der Göße des Umfeld die Anzahl der betrachteten Atome steigt. Hingegen liefert eine zu klein gewählte Umgebung ungenaue und nicht repräsentative Ergebnisse. 
 
@@ -140,7 +140,7 @@ Diese Begrenzung auf eine bestimme lokale Umgebung kann entweder in die Bildung 
 
 
 
-\subsection{Reduzierung der Trainingsets auf repräsentative Sets, ohne viel Mathematik}
+\subsection{Sparsification - Choosing representative Points with UNIFORM Method - Mathematically explained}
 Die Berechnung der Kovarianz Matrix und deren Jacobi-Matrizen ist aufwendig und kann vereinfacht werden. Im Bereich des \textit{Maschinellen Lernens (ML)} ist der Praktik der \textit{Ausdünnung} (engl.: Sparsification) verbreitet. Die Anzahl der Atom-Konfigurationen und die dazugehörigen lokalen Energien werden verkleinert,  die Trainingsdaten werden also minimiert. Dazu muss, beispielsweise durch Zufallsprinzip oder anderen ML-Methoden, eine repräsentative Menge an Atom-Konfigurationen gewählt. Um Genauigkeit zu gewährleisten werden die lokalen Energien der Trainingsdaten zu einer kleineren Menge an Punkten linear-kombiniert. Die Berechnung der lokalen atomaren Energien unter Verwendung von Ausdünnung im Folgenden: \footcite[1054]{GAP-intro}\footcite[3]{GAP-2009}
 
 $$TODO: 2.3 aus Anhang von Gap-2009 plus Erklärung aller Terme gemäß, 2. aus Anhang. Viele Dicke Formeln hier Bruder.$$
@@ -148,7 +148,7 @@ $$TODO: 2.3 aus Anhang von Gap-2009 plus Erklärung aller Terme gemäß, 2. aus 
 
 
 
-\subsection{Beschreibung der Deskriptoren - Berücksichtigen der Invarianzen -Bispectrum}
+\subsection{Description of Descriptors - Usage of Distance 2b}
 Deskriptoren beschreiben die lokale Anordnung von Atomen. Sie formen die Geometrie und durch sie wird die lokale Energie determiniert. Haben Deskriptoren zweier Konfigurationen ähnliche Werte, dann haben sie auch ähnliche Energie. Liegt eine spezifische atomare Anordnung vor, also Deskriptoren mit bestimmten Werten, dann wird mit dieser atomaren Anordnung, unter Verwendung quantenmechanischer Methoden (beispielsweise der DFT), die zugehörige Energie berechnet. Diese Paarung, also Geometrie und Energie sind die Daten, mit denen der Gauß´sche Approximierungs Prozess trainiert wird. 
 
 Die einfachsten Deskriptoren sind inter-atomare Abstände und Winkel. Für ein Zwei-atomiges Molekül dient der skalare Abstand als Deskriptor. Ein drei-atomiges Molekül benötigt als Deskriptor zumindest drei inter-atomare Abstände oder zumindest einen inter-atomaren Winkel. Die Komplexität nimmt mit der Größe der Systeme zu. 
@@ -167,11 +167,6 @@ Die zweite Möglichkeit, Invarianzen der Energie zu berücksichtigen, ist eine M
 $$ GAP-intro Formel 40 und 41. Anwendung von R^ um Rotationsinvarianz zu gewährleisten, erklären von \rho. $$
 
 
-
-\subsection{SOAP, als tatsächlich verwendete Basis, die als Argumente die Atompositionen nimmt}
-VIELLEICHT, weil möglicherweise werden andere Deskriptoren verwendet in der Arbeit. 
-
-\section{Verwendete Software, QUIP, nur kurzer Text Absatz um zu erklären, dass die beschriebenen Konzepte in QUIP umgesetzt sind}
 
 
 

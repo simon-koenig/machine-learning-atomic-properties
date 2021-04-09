@@ -1,0 +1,27 @@
+\chapter{Summary and Outlook}
+\label{chapter:6}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Model can be improved using more and better descriptors}
+\label{section:6.1}
+Analysing the choice of parameters in chapter \ref{chapter:5} the optimal selection of $\theta$, $\sigma_E$ and $\sigma_F$ leads to great results for the $H_2$ \textit{Molecule} and to satisfying results for the \textit{Hydrogen Crystal} system. Using the same descriptor as feature space for both atomic structures the deficiencies are outlined modelling the 192 Atom \textit{Hydrogen Crystal}. 
+
+While, as pointed out in \ref{subsection:5.1.2}, the \textit{2-body-distance} suffices the $H_2$ \textit{Molecule} oscillating in one dimension, it does fail to express the interactions present in the \textit{Hydrogen Crystal}. 
+One possible solution can be to expand the feature space used to describe the atomic system by adding or changing descriptors. Other descriptors may be used to resemble the atomic configurations more accurately in case of larger systems, as is the \textit{Hydrogen Crystal}. A descriptor taking angles between objects into account would be a potential expansion of the feature space. This would upgrade the geometrically mapped feature space from one dimension to three dimensions. That is the case for a \textit{3-body angle descriptor} taking into account angles between 3 atoms. The software utilised for this work in \ref{chapter7: B} (TODO: reference correct appendix letter) offers a \textit{3-body angle descriptor} amongst others. Making use of more complex descriptors could have positive impact to the modelling process and result in an improved fit. 
+
+(Maybe a paragraph about SOAP, ask Andres whether he recommends it or not )
+ 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Take on larger Systems}
+\label{section:6.2}
+
+Predicting energies and forces built on appropriate descriptor feature spaces and parameters opens up \textit{Machine Learning} solutions for larger and more complex systems than the $H_2$ \textit{Molecule} in \ref{subsection:4.1.1} and the  \textit{Hydrogen Crystal} in ref{subsection:4.1.2}. The suboptimal choice of the \textit{2-body-distance} descriptor for a 192 Atom problem leads to classifications trending in the right direction, although not precise results. The correctly reproduced trend shows the possibilities of using \textit{Machine Learning} Algorithms for the prognosis of the behaviour of quantum-mechanical systems. As pointed out in \ref{section:6.1} a fitting descriptor choice can lead to more exact precision in predictions. 
+
+Larger, more diverse systems may require combinations of different descriptors than the \textit{2-body-distance} descriptor utilised in this work. Gaining a model of high quality demands a sound choice of descriptors and refined parameter values. Additionally, the goodness of the model depends on the quality of the Input Data, computed with \textit{DFT}. The input data, providing the model with training data and validation data, is generated prior to building the model.  The importance of the input data becomes significant for diverse systems, possibly containing multiple atomic species.  
+
+Note that the creation of the model does not require any quantum-mechanical calculations and depends solely on the input data. This is pointed out in \ref{subsection:4.2.2}. Skipping quantum-mechanical calculation, for example \textit{DFT}, and making prognosis based on a trained \textit{Machine Learning} model reduces runtime and cost of computation. This makes \textit{ML} essential in the challenge of describing complex atomic systems. 
+
+
