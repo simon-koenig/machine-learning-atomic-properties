@@ -2,7 +2,7 @@
 
 The package contains all the required tools to reproduce the results of my bachelor thesis. All the theoretical basics and step by step instructions are in my [Thesis](./Thesis). The code is written mostly in python and some in shell script.
 
-The training data was generated using Vienna *ab initio* simulation package (VASP). This work deals with on system of a hydrogen molecule and another one of a hydrogen crystal. The machine learning model was built upon the libAtoms code architecture in [libAtoms][https://github.com/libAtoms/QUIP].
+The training data was generated using Vienna *ab initio* simulation package (VASP). This work deals with on system of a hydrogen molecule and another one of a hydrogen crystal. The machine learning model was built upon the libAtoms code architecture in [libAtoms](https://github.com/libAtoms/QUIP).
 
 The repository structure is as follows.
 - [GAP](./GAP) contains all modules and and classes for the creation of a ml model.
