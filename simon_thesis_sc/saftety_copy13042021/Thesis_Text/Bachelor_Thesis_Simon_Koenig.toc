@@ -1,0 +1,50 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\babel@toc {ngerman}{}
+\babel@toc {ngerman}{}
+\babel@toc {english}{}
+\babel@toc {ngerman}{}
+\contentsline {chapter}{\numberline {1}Einleitung}{8}%
+\contentsline {section}{\numberline {1.1}Einleitung, Section 1}{8}%
+\contentsline {chapter}{\numberline {2}TheorieTeil von VielK"orper SG zur DFT}{9}%
+\contentsline {section}{\numberline {2.1}Vielk"orperproblematik der analytischen QM, Grundlegend f"ur Ein-K"orper Problem}{9}%
+\contentsline {section}{\numberline {2.2}Vielk""orperProblematik, Diskussion der Hartree-Fock Methode als "ahnlicher, aber doch verschiedener Ansatz + Born Oppenheimer N"aherung als wichtige Beitr"age zur DFT}{10}%
+\contentsline {subsection}{\numberline {2.2.1}Vereinfachungen hervorstreichen}{10}%
+\contentsline {subsection}{\numberline {2.2.2}Vielk"orperproblem der QM}{11}%
+\contentsline {subsubsection}{\numberline {2.2.2.1}Born-Oppenheimer N"aherung}{11}%
+\contentsline {subsubsection}{\numberline {2.2.2.2}Hartree-bzw. Hartree Fock Methode}{12}%
+\contentsline {section}{\numberline {2.3}Ansatz der DFT mit allen Termen}{13}%
+\contentsline {subsection}{\numberline {2.3.1}Warum DFT?}{13}%
+\contentsline {subsection}{\numberline {2.3.2}Annahmen der DFT, Energie als Funktional der Dichte}{13}%
+\contentsline {section}{\numberline {2.4}L"osung der DFT}{15}%
+\contentsline {chapter}{\numberline {3}Uebergangsteil von DFT zu ML Gauss Regression}{16}%
+\contentsline {section}{\numberline {3.1}Motivation, warum ML}{16}%
+\contentsline {subsection}{\numberline {3.1.1}Pfad von der DFT zu ML Methode}{16}%
+\contentsline {subsection}{\numberline {3.1.2}Was wird genau verwendet}{16}%
+\contentsline {section}{\numberline {3.2}Die Gauß Regression}{17}%
+\contentsline {subsection}{\numberline {3.2.1}Vorraussetzungen für Gaussian Process}{17}%
+\contentsline {subsection}{\numberline {3.2.2}Bauen der Covarianz Matrix, also trainieren des Modells}{18}%
+\contentsline {subsection}{\numberline {3.2.3}Vorraussagen machen mit Modell}{18}%
+\contentsline {section}{\numberline {3.3}Modifikationen zur quantenmechanischen Anwendung}{19}%
+\contentsline {subsection}{\numberline {3.3.1}Totale Energien und Kräfte}{19}%
+\contentsline {subsection}{\numberline {3.3.2}Beschränkung auf nahe Umgebung - cutoff radius}{19}%
+\contentsline {subsection}{\numberline {3.3.3}Reduzierung der Trainingsets auf repräsentative Sets, ohne viel Mathematik}{20}%
+\contentsline {subsection}{\numberline {3.3.4}Beschreibung der Deskriptoren - Berücksichtigen der Invarianzen -Bispectrum}{20}%
+\contentsline {subsection}{\numberline {3.3.5}SOAP, als tatsächlich verwendete Basis, die als Argumente die Atompositionen nimmt}{21}%
+\contentsline {section}{\numberline {3.4}Verwendete Software, QUIP, nur kurzer Text Absatz um zu erklären, dass die beschriebenen Konzepte in QUIP umgesetzt sind}{21}%
+\contentsline {chapter}{\numberline {4}Implementing Gaussian Process train-predict-analyse}{22}%
+\contentsline {section}{\numberline {4.1}Talk about given problem, visualise hydrogen and Split up the task - training, prediction and analysis}{22}%
+\contentsline {section}{\numberline {4.2}Training}{22}%
+\contentsline {subsection}{\numberline {4.2.1}Get Training Data --> DFT --> XML file}{22}%
+\contentsline {subsection}{\numberline {4.2.2}Transform Training Data, xml to xyz with shell script}{22}%
+\contentsline {subsection}{\numberline {4.2.3}Split up Training and Test Data and briefly explain why}{22}%
+\contentsline {subsection}{\numberline {4.2.4}Perform gap fit on training data}{22}%
+\contentsline {section}{\numberline {4.3}Prediction}{22}%
+\contentsline {subsection}{\numberline {4.3.1}Make Prediction using QUIP}{22}%
+\contentsline {subsection}{\numberline {4.3.2}Prediction Plot, real values against predicted values}{22}%
+\contentsline {section}{\numberline {4.4}Analysis}{22}%
+\contentsline {subsection}{\numberline {4.4.1}Analyse prediction/real values graphs using RSME and R2 Score}{22}%
+\contentsline {subsection}{\numberline {4.4.2}Plot Dissipation(Bindungsenergie) Kurve and explain}{22}%
+\contentsline {chapter}{\numberline {5}Outlook and Conclusion}{23}%
+\contentsline {section}{\numberline {5.1}Why is ML useful to compute atomic energies --> saves computational cost}{23}%
+\contentsline {section}{\numberline {5.2}Outlook - Possible use cases --> calculating energies for more complex structures using more complex descriptors}{23}%
+\contentsline {section}{\numberline {5.3}kritzelChapter}{24}%

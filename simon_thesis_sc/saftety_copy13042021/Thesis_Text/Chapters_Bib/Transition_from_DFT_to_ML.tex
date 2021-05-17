@@ -1,0 +1,318 @@
+\chapter{Transition from DFT to ML}
+\label{chapter:3}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Motivation}
+\label{section:3.1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Path from DFT to ML method}
+\label{subsection:3.1.1}
+The description of atomic systems based on \textit{Density Functional Theory}, presented in chapter \textit{chapter:2}, results in significant reduction in computational cost compared to the exact solution of the \textit{Many Body Schrodinger Equation}. In general quantum-mechanical systems are highly complex and diverse, in a way that excerting \textit{DFT} transcends the computational resources. Further the solutions by \textit{DFT} are limited to a precise system for which the calculations were conducted and need to be recalculated once the system changes. The motivation for utilising \texit{Machine Learning}  is the creation of a \textit{Potential Energy Surface (PES)}, meaning a general description of an quantum-mechanical system inside specific boundaries. This description is not susceptible to small changes in configuration and describes the system as a whole. Details for \textit{PES} can be found in \cite{PES}. 
+
+\textit{Machine Learning} tries to model a \textit{PES}, describing the energy of the atoms of a system as function of their environment. This \textit{atomic-neighbourhood-environment} reacts sensitive to small changes of the atomic environment, for example the change of an atomic species or atomic quantity.  \footcite[1051]{GAP-intro}
+
+The \textit{Machine Learning Algorithm} introduces in this work is not per se able to find quantum properties, like energies and forces, for atomic systems. The solutions of an \textit{ML Model} are based on Training Data the model, upon which a model makes classifications. Training Data needs to be generated quantum-mechanically, in this work it is computed using \textit{DFT}. 
+
+The stochastic tool, underlying the \textit{ML Model} is the \textit{Gaussian Process Regression (GAP)}. Note that \textit{ML Models}, here \textit{GAP} in specific, do not offer good extrapolations of problems. Valid output is generated for interpolation tasks. General informations on this are to be found in \cite{GAP-info-theory}. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{What is used exactly? Relationship of atomic systems and its energy}
+\label{3.1.2}
+Predicting the quantum-mechanical properties of atomic systems makes use of a stochastic framework. Other possibilities include utilising \textit{Neuronal Networks (NN)}. The stochastic tool used in this work is the \textit{Gaussian Process Regression (GAP)}. 
+
+To make predictions through Regression, the atomic energies of a set of atoms are introduced as a function of their configuration, this is their euclidean geometry. The hallmark of the interatomic potential is that the energy consists of a sum of energy functionals lying inside a, later introduced \textit{cutoff-radius} and negligible long-range terms.  This definition is found in \cite[1051]{GAP-intro}
+
+\begin{equation}
+	E = \sum_{\alpha} \sum_{i\in \alpha} \epsilon_{i}^{\alpha} + lrt
+	\label{eq:Egeneral}
+\end{equation}
+
+\begin{itemize}
+	\item E ... Total Energy of atomic system
+	\item $  \epsilon_{i}^{\alpha} $ ... Local Energy Functionals within a \textit{cutoff radius}
+	\item $\alpha$ ... type of contribution to the Total Energy, descriptor type 
+	\item i ... counts instances of the Local Energy Contributions  
+	\item lrc ... \textit{Long Range Contributions} outside a \textit{cutoff radius}, include polatisability, van-der-walls forces, etc. 
+\end{itemize}
+
+The contributions $  \epsilon_{i}^{\alpha} $ range over a \alpha, each denoting a specific type of Energy Functional. These Energy Functionals take, so called, \textit{descriptors} as arguments and describe the atomic energy as functional of the atomic configuration. \textit{Descriptors} characterise the given atomic constellation by mapping the cartesian coordinates of the atomic environment to a descriptor feature space. This descriptor feature space is connected to an atomic energy for a constellation. This value pair serves as input for the \textit{ML Model}. Details are in \cite{GAP-intro}. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Gauss Regression}
+\label{section:3.2}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Prerequisites for the Gaussian Process Regression}
+\label{subsection:3.2.1}
+
+Gaussian Processes are used to handle regression problems. The data input consists of N data points $\textbf{X}_n,\textbf{t}_n  = \{x^{(n)},t_n\}_{n=1}^N$. The list of N input points  $\textbf{X}_n$ exists in the space of an H-dimensional fixed set of basis functions $ \{ \phi(\textbf{x})\}_{h=1}^N $ at the points $\{\textbf{x}_n\}$ and is denoted by the Matrix 
+
+$$ 
+R_{nh} \equiv  \phi_h(\textbf{x}^{(n)}) 
+$$
+
+the target value vector $\textbf{y}_n$ is defined by 
+
+$$
+y_n \equiv  \sum_h R_{nh} w_h
+$$
+
+with the weights $w_n$ being Gauss distributed with mean zero. 
+
+$$
+ P(\textbf{w}) = Normal(\textbf{w};0;\sigma_w^2\textbf{I}). 
+$$
+
+With  \cite[540]{GAP-info-theory} the covariance matrix of \textbf{y} is introduced as:
+
+$$
+\textbf{Q} 
+= 
+\langle 
+\textbf{y} \textbf{y}^T \rangle 
+= 
+\langle \textbf{R} \textbf{w} \textbf{w}^T \textbf{R}^T \rangle
+= 
+\textbf{R} \langle \textbf{w} \textbf{w}^T \rangle \textbf{R}^T 
+= 
+\sigma_w^2 \textbf{R}  \textbf{R}^T
+$$
+
+
+
+\subsection{Building the Kernel}
+\label{3.2.2}
+
+The main assumption is that the weights $\textbf{w}$ and consequently the vector $\textbf{y} $are Gauss distributed. This condition holds for any selection of points $ \textbf{X}_N $. The target values$ t_n $are assumed to differ from the correlated function value $ y_n$ by a Gaussian noice of $\sigma_\nu^2$. This determines the target value vector \textbf{t} to be Gaussian distributed. 
+
+
+$$ 
+P(\textbf{w}) = Normal(\textbf{w};0;   \textbf{Q}  +  \sigma_\nu^2\textbf{I})
+$$
+
+The covariance matrix of \textbf{t} is introduces as \textbf{C}. 
+
+\begin{equation}
+\textbf{C} 
+= 
+ \textbf{Q}  +  \sigma_\nu^2\textbf{I}
+ = 
+\sigma_w^2 \textbf{R}  \textbf{R}^T +  \sigma_\nu^2\textbf{I}
+\label{CN}
+\end{equation}
+
+Every Data Set \textbf{X} living in an arbitrary basis \textbf{H} induces a Covariance Matrix, also \textit{Kernel}. The Covariance Matrix is then extended by the other part of the Training Data Set, the target values \textbf{t}. Note that in this work the Data Set \textbf{X} contains the atomic configurations, more specific the descriptor values of the atomic configurations. The target values \textbf{t} are populated by atomic energies calculated by \textit{DFT}. Details on the creation of the \textit{Kernel} are found in  \cite[540]{GAP-info-theory}
+
+In General the choice of the Covariance Matrix, that is the choice of the Set of H basis functions is not predetermined. The only constraint is that it must not be negative definite. In this work a \textit{Squared Exponential Kernel} is used. \cite[83]{Gauss-Cambridge}
+
+\subsection{Making Predictions}
+\label{3.2.3}
+The model makes predictions based on the \textit{Gaussian Process Algorithm} using a Data Set consisting of N data points $\textbf{X}_N and \textbf{t}_N. The task is to make a prediction for value $t_{N+1}$. The Covariance Matrix $\textbf{C}_{N+1}$  in \ref{eq:CN+1} is the extended Kernel for the target vector $\textbf{t}_{N+1}$. 
+
+
+\begin{equation}
+	\textbf{C}_{N+1} 
+\equiv
+\begin{bmatrix}
+\begin{bmatrix}
+  \textbf{C}_N
+\end{bmatrix}
+\begin{bmatrix}
+  \textbf{k}
+\end{bmatrix}
+\\
+\\
+\begin{bmatrix}
+  \textbf{k}^T
+\end{bmatrix}
+\begin{bmatrix}
+  \kappa
+\end{bmatrix}
+
+\end{bmatrix}
+	\label{eq:CN+1}
+\end{equation}
+
+(Ask Andres if this is detailed enough or if couple of more steps should be included)
+
+
+After some conversions detailed in  \cite[543]{GAP-info-theory} the predicted $\hat{t}_{N+1}$ is given by 
+
+\begin{equation}
+	\hat{t}_{N+1} = \textbf{k}^T \textbf{C}_N^{-1} \textbf{t}_N
+	\label{eq:tN+1}
+\end{equation}
+
+and the error  $\sigma_{\hat{t}_{N+1}}^{2}$ on the prediction 
+
+\begin{equation}
+	\sigma_{\hat{t}_{N+1}}^{2} = \kappa - \textbf{k}^T \textbf{C}_N^{-1} \textbf{k}
+	\label{eq:errorN+1}
+\end{equation}
+
+with 
+
+\begin{itemize}
+	\item $ \textbf{C}_N^{-1} $ ... Inverse Kernel of \ref{eq:CN}
+	\item $ \textbf{k} $ ... $\textbf{k} \equiv \langle t_{N+1},\textbf{t} \rangle$, vector containing mapping $t_{N+1}$ to $\textbf{t}$, part of matrix $\textbf{C}_{N+1}$
+	\item $ \textbf{t}_N $ ... Target value vector of Training Data 
+	\item $ \kappa $ ... $\kappa \equiv \langle t_{N+1},t_{N+1}\rangle$, Intrinsic value related to unknown target $t_{N+1}$, needed to scale the error, part of matrix $\textbf{C}_{N+1}$
+\end{itemize}
+
+The power of the \textit{Gaussian Process} lies within not having to invert the Matrix $\textbf{C}_{N+1}$ to make predictions at configuration $\textbf{x}^{N+1}$. Omitting the inversion of $\textbf{C}_{N+1}$ allows for the creation of a model using an arbitrary large number H of Basis Functions. This is because the inversion of  $\textbf{C}_{N}$ always scales with $N^3$ independent of H. Raising the number of Basis Function may improve the accuracy of the model. This is because the inversion of  $\textbf{C}_{N}$, in equation \ref{eq:CN}always scales with $N^3$ independent of H. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Modifications of Gauss Regression and preparing for Quantum Mechanical Use}
+\label{section:3.3}
+The \textit{Density Functional Theory} in chapter \ref{chapter:2} and the \textit{Gaussian Process Regression} in section \ref{section:3.2} lay the foundation for building a model and creating an Interatomic Potential. Data generated by \textit{DFT} is input into a \textit{Gaussian Regression Machine} and an atomic system is modelled. 
+The \textit{Machine Learning} fundamentals need to be augmented and further optimised for quantum mechanical use. 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Total Energies and Forces}
+\label{subsection:3.3.1}
+The first extension concerns the computation of \textit{Total Energies} and \textit{Total Gradients} of those. In section \ref{section:3.2} the \textit{Gaussian Process Regression} was fit using per atom energies. This simplification does not hold, because just \textit{Total Energies} of systems are known and generated by \textit{DFT}. In \ref{eq:Enoise} \textit{Gaussian Noise} $\nu_E$ is added to the \textit{Total Energy} of the system from \ref{eq:Egeneral}. Procedural the computation of the Kernel is identical to \ref{eq:CN} but summarising over all N local energies of the system. \cite[1053]{GAP-intro}
+
+begin{equation}
+	 E = \sum_{\alpha} \sum_{i} \epsilon_{i}^{\alpha} + \nu_E
+	 \label{eq:Enoise}
+\end{equation}
+
+
+\begin{equation}
+	 \langle E_N E_{N'} \rangle = \sigma_w^2 \sum_{i \in N}\sum_{j \in N'} 
+C(\textbf{d}_i,\textbf{d}_j)
++
+\sigma_E^2 \delta_{NN'}
+	\label{eq:CNTotal}
+\end{equation}
+
+Computing forces is straightforward. The \textit{Total Forces} relating to the  \textit{Total Energies} are the Gradient with respect to any atom $k$ of the system and the general coordinates $\xi$. \textit{Gaussian Noise} is added and denoted by $\nu_{\xi}$ 
+
+\begin{equation}
+	\frac{\partial E}{\partial\xi_k} = 
+\frac{\partial \sum_{\alpha} \sum_{i} \epsilon_{i}^{\alpha}}{\partial\xi_k} + \nu_\xi
+
+	\label{eq:GradientTotal}
+\end{equation}
+
+The computation of the derivatives can be written as 
+
+\begin{equation}
+	\frac{\partial^2 \langle E_N E_{N'} \rangle }{\partial\xi_k \partial\chi_l}
+=
+ \sigma_w^2 \sum_{i \in N}\sum_{j \in N'}
+\frac{\partial \textbf{d}_i^T}{\partial \xi_k }
+(\nabla_{\textbf{d}_i}C(\textbf{d}_i,\textbf{d}_j)\nabla_{\textbf{d}_j}^T)
+\frac{\partial \textbf{d}_j}{\partial \chi_l }
++
+\sigma_E^2 \delta_{NN'} \delta_{\xi_k\chi_l}
+
+	\label{eq:CNGradientTotal}
+\end{equation}
+
+Notice that for the all the equations \ref{eq:CNTotal}, \ref{eq:GradientTotal} and \ref{eq:CNGradientTotal} a term representing \textit{Gaussian Noise} is added. This is outlined in \ref{subsection:3.2.2} and is due to an assumed \textit{Gaussian} error of the target values \textbf{t}.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Local Approximation - Cutoff Radius}
+\label{subsection:3.3.2}
+To reduce computational cost of energies and their derivatives compact support is needed. In order to achieve this, a \textit{cutoff-radius} $d$ is introduced. The regarded local environment of every atom of a system is geometrically limited to the \textit{cutoff-radius} $r_cut$. The compact support for the local energies is provided by adding a cutoff function $f_{cut}$
+
+
+
+\begin{equation}
+	\epsilon(\textbf{d}_i,w) = f_{cut}\sum_h w_h \phi_h(\textbf{d}_i)
+	\label{eq:ComSup}
+\end{equation}
+
+with the cutoff function, used by the \textit{GAP} and \textit{QUIP} software, referenced the Appendix \ref{chapter:7letter}. TODO: get right appendix reference for gap and quip 
+
+\begin{equation}
+f_cut =
+\begin{cases}
+1, &  r \leq r_{cut} -d\\
+\frac{\left[cos\left(\pi\frac{r-r_{cut}+d}{d}\right)+1)\right]}{2}, & r_{cut}-d < r \leq r_{cut} \\
+0, &  r > r_{cut}
+\end{cases}
+	\label{eq:fcut}
+\end{equation}
+
+The \textit{cutoff-radius} $r_cut$ may be changed, depending on the required precision of the model. The parameter $d$ can also be set manually, if needed, but is typically set to 1 $\AA $ as the typical atomic length scale. $$Note that a larger $r_cut$ may lead to a better fit but an increase in computation time. The concept is explained in \cite{GAP-intro}. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Sparsification - Choosing representative Points}
+\label{3.3.3}
+Further reduction of computational cost is achieved by applying a common \textit{Machine Learning} concept: \textit{sparsification}. This practice tries to lower the dimension N of the Covariance Matrix by selecting a set of \textit{sparse points}, the \textit{sparse configuration}.  \textit{Sparsification} projects all of the input data onto a subset of \textit{sparse configurations}, if done correctly, with very little loss of information. One can think of the\textit{sparse configuration}  as resemblance of the \textit{Training Data Set}, by selection of a highly representative set of points. Similarly to the the \textit{cutoff-radius} in section \ref{subsection:3.3.2}, the size of the \textit{sparse set} is variable. A small number of \textit{sparse points} reduces the computational cost of the model significantly but may also result in a loss of precision in prediction. 
+
+Let the number of \textit{sparse points} be M and the number of \textit{data points} in the original data set N. 
+The Covariance Matrix $C_{NN}$ is computed as detailed in section \ref{label:CN} for the original input configurations $\textbf{x}_N$. \cite[Appendix]{GAP-2009}
+
+
+\begin{equation}
+	\textbf{C}_{NN} = \langle E_N E_{N'} \rangle 
+	\label{eq:CNN}
+\end{equation}
+
+Similarly,  the Covariance Matrix $C_{MM}$ is built for the set of \textit{sparse configurations} $\textbf{x}_M$ 
+
+\begin{equation}
+	\textbf{C}_{MM} = \langle E_M E_{M'} \rangle
+	\label{eq:CMM}
+\end{equation}
+
+and the Covariace Matrix $C_{MN}$ mapping the \textit{sparse configuration} to the original data configuration:
+
+\begin{equation}
+	\textbf{C}_{NM} = \langle E_N E_{M} \rangle
+	\label{eq:CMN}
+\end{equation}
+
+Putting it all together, the predicted value $t_{N+1}(x_{N+1})$ at a new atomic configuartion $x_{N+1}$ is written as
+
+\begin{equation}
+	 t_{N+1}(x_{N+1}) = \textbf{k}^T
+(\textbf{C}_{MM} + \textbf{C}_{MN} \Lambda_{MM}^{-1}\textbf{C}_{NM})^{-1}
+\textbf{C}_{MN}\Lambda_{MM}^{-1} \textbf{t}
+	\label{eq:Final}
+\end{equation}
+
+with the final constituents
+
+\begin{itemize}
+  \item \textbf{k} ... vector containing mapping of $t_{N+1}$ to $\textbf{t}$, $\textbf{k} \equiv \langle t_{N+1},\textbf{t}_{M} \rangle$
+  \item $\textbf{C}_{MM}$ ... Covariance matrix of \textit{sparse configuration}
+  \item $\textbf{C}_{MN}$ ... Covariance matrix of \textit{sparse configuratio}n and \textit{original configuration}
+    \item \textbf{t} ... Target Values of \textit{original configuration}
+  \item $\Lambda_{MM}^{-1}$ ... Diagonal Matrix, containing the \textit{Gaussian Noise} terms $\sigma_{E}^2 $ for the energies and $\sigma_{\zeta}^2 $ for the forces respectively. 
+\end{itemize}
+
+
+The final form of the \textit{Gaussian Process} in equation \ref{eq:Final} combines the computational cost saving mechanisms derailed in this chapter.  Note that computational cost  for each prediction scales with the number M of \textit{sparse points} since multiplying \textbf{t} from the right in \ref{eg:Final} has been precomputed at the training stage of the model, explained in \cite[1054]{GAP-Intro}.
+The effects of \textit{Sparsification} and a \textit{Gauss} distributed Kernel allow for a fast \textit{Machine Learning Model}. 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Description of Descriptors - Usage of Distance 2b}
+\label{subsection:3.3.4}
+The \textit{Training Data} for the \textit{Machine Learning Model} introduced in \ref{section:3.2} consists of the N data points  $\textbf{X}_n,\textbf{t}_n  = \{x^{(n)},t_n\}_{n=1}^N$. The set $\textbf{X}_n$ mirrors the raw atom positions of the quantum mechanical system, simulated by \textit{Density Functional Theory}.  
+
+Outlined in \ref{section:3.1}, the \textit{Machine Learning Model} uses energy functionals for its calculations, taking \textit{descriptor} values as arguments. Descriptors map the atomic configuration in cartesian coordinates to a feature space that is used as input data for building the model. An appropriate transformation of the raw input data to a descriptive feature space determines the success of the \textit{ML-Model}. \cite[1055]{GAP-Intro} 
+
+In general a descriptor is a function applied to an atom configuration and converting it to a feature space. Possible descriptions of an atomic neighbourhood environment take interatomic distances or angles into account. More complex descriptors include representing an atomic environment by \textit{neighbourhood density functions}.  
+
+In this work a simple \textit{2-body-distance} descriptor, in \ref{eq:2bscheme} is utilised. This descriptor characterises atomic neighbourhood environments by the euclidean distance between atoms. 
+
+\begin{equation}
+	\textbf{d}_{ij} = \lvert \textbf{r}_i - \textbf{r}_j \rvert 
+	\label{eq:2bscheme}
+\end{equation}
+
+\begin{itemize}
+  \item $\textbf{d}_{ij} $... interatomic distance
+  \item $\textbf{r}_i, \textbf{r}_j$  ... position of the $ith$, $jth$ atom 
+\end{itemize}

@@ -18,7 +18,27 @@ startline=`grep -m1 -n velocities vasprun.xml | awk '{print substr($1,1,length($
 #forces_1=`tail -n +$startline $infile | grep -A  $natom 'forces' | awk '{print $2,$3,$4}'`
 
 # Get the 9 lattice constants
-lattice=`grep  -A 3 -m 2 \"basis\" $infile | awk '{print$2,$3,$4}' | tail -n+2 | head -n+3 | tr '\n' ' '`
+lattice=`grep  -A 3 -m 2 \"basis\" $infile | awk '{print $2,$3,$4}' | tail -n+2 | head -n+3 | tr '\n' ' '`
+# Get the 9 lattice constants seperately to then expand the fractional coordinates to cartesian coordinates
+lattice_ax=`echo $lattice | awk '{print $1}'`
+lattice_ay=`echo $lattice | awk '{print $2}'`
+lattice_az=`echo $lattice | awk '{print $3}'`
+lattice_bx=`echo $lattice | awk '{print $4}'`
+lattice_by=`echo $lattice | awk '{print $5}'`
+lattice_bz=`echo $lattice | awk '{print $6}'`
+lattice_cx=`echo $lattice | awk '{print $7}'`
+lattice_cy=`echo $lattice | awk '{print $8}'`
+lattice_cz=`echo $lattice | awk '{print $9}'`
+echo $lattice_ax
+echo $lattice_ay
+echo $lattice_az
+echo $lattice_bx
+echo $lattice_by
+echo $lattice_bz
+echo $lattice_cx
+echo $lattice_cy
+echo $lattice_cz
+
 
 # Get the atom - element e.g. H (Hydrogen)
 natompo=`echo $natom"+1" | bc -l`
@@ -63,67 +83,32 @@ nstepsmo=`echo $nsteps"-1" | bc -l`
 
 for i in `seq 0 1 $nstepsmo`
 do
-#    echo  ${energies_array[${i}*2+1]}
 
     echo $natom >> $outfile
     echo "Lattice=\"$lattice\" Properties=species:S:1:pos:R:3:forces:R:3:energies:R:1 energy=${energies_array[${i}*2+1]} pbc=\"T T T\"" >> $outfile
+
+
     for j in `seq 0 1 $natommo`
     do
-        echo ${atom_type_array[$j]} ${pos_array[${i}*${natom}*3+${j}*3]} ${pos_array[${i}*${natom}*3+${j}*3+1]} \
-        ${pos_array[${i}*${natom}*3+${j}*3+2]} ${for_array[${i}*${natom}*3+${j}*3]} ${for_array[${i}*${natom}*3+${j}*3+1]} \
+        # Multiply fractional coordinates with matrix of lattice vectors and
+        # write, together with forces and constant 0 (quip syntax demands some
+        # constant here), to outfile.
+        fracx=`echo ${pos_array[${i}*${natom}*3+${j}*3]} | bc -l`
+        fracy=`echo ${pos_array[${i}*${natom}*3+${j}*3+1]} | bc -l`
+        fracz=`echo ${pos_array[${i}*${natom}*3+${j}*3+2]} | bc -l`
+        x=`echo $fracx"*"$lattice_ax"+"$fracy"*"$lattice_bx"+"$fracz"*"$lattice_cx| bc -l `
+        y=`echo $fracx"*"$lattice_ay"+"$fracy"*"$lattice_by"+"$fracz"*"$lattice_cy| bc -l `
+        z=`echo $fracx"*"$lattice_az"+"$fracy"*"$lattice_bz"+"$fracz"*"$lattice_cz| bc -l `
+        echo ${atom_type_array[$j]} $x $y $z\
+        ${for_array[${i}*${natom}*3+${j}*3]} ${for_array[${i}*${natom}*3+${j}*3+1]} \
         ${for_array[${i}*${natom}*3+${j}*3+2]} " 0.00000000" >> $outfile
     done
 
 done
 
-#Lattice="20.0 0.0 0.0 0.0 20.0 0.0 0.0 0.0 20.0" Properties=species:S:1:pos:R:3:forces:R:3:energies:R:1 Energie=3.21 free_Energie=3.21 pbc="T T T"
+# e.g. Lattice="20.0 0.0 0.0 0.0 20.0 0.0 0.0 0.0 20.0"
+# Properties=species:S:1:pos:R:3:forces:R:3:energies:R:1
+# Energie=3.21 free_Energie=3.21 pbc="T T T"
 echo "1"  >> $outfile
 echo "Lattice=\"$lattice\" Properties=species:S:1:pos:R:3:forces:R:3:energies:R:1 energy=3.21 free_Energie=3.21 pbc=\"T T T\"" >> $outfile
 echo "H        0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       0.00000000       3.21000000" >> $outfile
-
-
-# Write the output to outfile, just a template and not for further use
-# for i in `seq 1 1 $nsteps`
-# do
-#
-#    echo $natom >> $outfile
-#    echo "Lattice=$lattice Properties=species:S:1:pos:R:3:
-#    forces:R:3:energies:R:1 Energie=dummy_energy pbc=\"T T T\"" >> $outfile
-#
-#    #echo $positions $ forces>> $outfile
-#
-#    echo "appended output" >> $outfile
-#    #echo $nsteps " " $natoms
-#    #echo $positions $forces
-#
-# done
-
-
-# While loop to iterate over all positions, can only iterate over one argument
-# tail -n +$startline $infile | grep -A  $natom 'positions' | awk '{print $2,$3,$4}' | while read line
-# do
-# echo $line
-# done
-
-# not working, tried to loop over all positions
-# for (x,y,z) in $positions
-# do
-#    echo $x $y $z
-# done
-
-
-
-
-
-# Get the atom - element e.g. H (Hydrogen)
-# grep -A $natom '>atomtype' $infile | awk -F':' '{split($1,subfield,"");print subfield[12] }' | tail -n +3
-
-
-
-
-# TODO:
-# Get energies for each timestep, uncertain which energies to use
-
-# Get energies of isolated atoms (e.g. e_0_Hydrogen)
-
-# concatenate all the needed values to a infile format identical to .xyz (e.g. train.xyz)

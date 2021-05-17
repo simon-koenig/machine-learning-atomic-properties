@@ -1,5 +1,0 @@
-[0] Config.pm:304> INFO - This is Biber 2.14
-[0] Config.pm:307> INFO - Logfile is 'Uebergangsteil_von_DFT_zu_ML.blg'
-[80] biber-darwin:322> INFO - === Thu Jan  7, 2021, 21:41:05
-[240] Utils.pm:320> ERROR - Cannot find 'Uebergangsteil_von_DFT_zu_ML.bcf'!
-[240] Biber.pm:132> INFO - ERRORS: 1

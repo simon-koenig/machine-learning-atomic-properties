@@ -17,11 +17,13 @@ class QualityPlot(object):
     # axis = numpy.ndarray
     def energies_on_energies(self, real_values, predicted_values, axis,
                              title="Energy-Plot"):
-        # Read data, skip the last one since this is the single atom energy
-        # TODO: -1 is hardcoded, should be -n where n is the number
-        # of atom_types
-        real_atoms = read(real_values, ':-1')
-        predicted_atoms = read(predicted_values, ':-1')
+        # Read data, skip the last ones since these are the single atom energy
+        # Get number of unique atom types, n_types
+        step = read(real_values, "0")
+        n_types = len(set(step.get_chemical_symbols()))
+        # Read in real values and predicted values
+        real_atoms = read(real_values, f":-{n_types}")
+        predicted_atoms = read(predicted_values, f":-{n_types}")
 
         # Plot real energies on the x axis and predicted energies on the y axis
         real_energies = [a.get_potential_energy() / len(a.get_chemical_symbols())
@@ -29,19 +31,19 @@ class QualityPlot(object):
         predicted_energies = [a.get_potential_energy() / len(a.get_chemical_symbols())
                               for a in predicted_atoms]
         # Make scatter plot
-        axis.scatter(real_energies[:], predicted_energies[:])
+        axis.scatter(real_energies[:], predicted_energies[:], c='k', s=20)
 
         # Improve look
-        axis.set_title(title)
+        axis.set_title(title, fontsize=13, fontname="Times New Roman")
         energy_array = np.array(real_energies + predicted_energies)
         lim = (energy_array.min(), energy_array.max())
         axis.set_xlim(lim)
         axis.set_ylim(lim)
         # add line of exactly with slope = 1
-        axis.plot(energy_array, energy_array, c='g')
+        axis.plot(energy_array, energy_array, c='g', alpha=0.5)
         # set labels
-        axis.set_ylabel('energy by GAP / (eV/Å)')
-        axis.set_xlabel('energy DFT / (eV/Å)')
+        axis.set_ylabel(r'Energy by Model / eV')
+        axis.set_xlabel(r'Energy by DFT / eV')
 
         # real_values = .xyz file, outcome of DFT
         # predicted values = .xyz file, outcome of QUIP/GAP
@@ -63,7 +65,7 @@ class QualityPlot(object):
                 real_forces.append(a_real.get_forces()[j])
                 predicted_forces.append(a_predicted.arrays['force'][j])
         # Make scatter plot
-        axis.scatter(real_forces[:], predicted_forces)
+        axis.scatter(real_forces[:], predicted_forces[:], c='k')
         # Improve look
         axis.set_title(title)
         force_array = np.array(real_forces + predicted_forces)
@@ -71,7 +73,7 @@ class QualityPlot(object):
         axis.set_xlim(lim)
         axis.set_ylim(lim)
         # add line with slope = 1
-        axis.plot(force_array, force_array, c='g')
+        axis.plot(force_array, force_array, c='g', alpha=0.5)
         # set labels
         axis.set_ylabel('force by GAP / (eV/Å)')
         axis.set_xlabel('force by DFT / (eV/Å)')

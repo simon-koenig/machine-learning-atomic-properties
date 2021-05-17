@@ -40,6 +40,29 @@ class GAPModel(object):
     # sigma = string, 4 integers  larger than zero e.g.: 0.1 0.2 0.2 0.0
     # sigma values = 'energy force virial, hessian'
 
+    # Function to return the real and predicted energies of the model.
+    # real values: .xyz file containing atom configurations
+    # predicted values: .xyz file containing atom configurations and
+    # predicted atomic energies
+
+    def getEnergies(self, real_values, predicted_values):
+        # Get number of unique atom types, n_types
+        from ase.io import read
+        step = read(real_values, "0")
+        n_types = len(set(step.get_chemical_symbols()))
+
+        # Read in real values and predicted values
+        real_atoms = read(real_values, f":-{n_types}")
+        predicted_atoms = read(predicted_values, f":-{n_types}")
+
+        # Plot real energies on the x axis and predicted energies on the y axis
+        real_energies = [a.get_potential_energy() / len(a.get_chemical_symbols())
+                         for a in real_atoms]
+        predicted_energies = [a.get_potential_energy() / len(a.get_chemical_symbols())
+                              for a in predicted_atoms]
+
+        return real_energies, predicted_energies
+
     def train(self, *parameter_string, training_data, GAP_potential, sigma,
               print_output=True):
         cmd = (f" gap_fit energy_parameter_name = energy "
@@ -115,8 +138,8 @@ class GAPModel(object):
         except AttributeError:
             return ("Prediction did not work.")
 
-    # Function to return the Root Mean Squared Error - RMSE
-    def RMSE(self, real_values, predicted_values):
+    # Function to return the Root Mean Squared Error - RMSE of energy
+    def energy_RMSE(self, real_values, predicted_values):
         # Get number of unique atom types, n_types
         from ase.io import read
         step = read(real_values, "0")
@@ -139,8 +162,8 @@ class GAPModel(object):
 
         return RMSE
 
-    # Function to return the coefficient of determination  - R2_score
-    def R2_Score(self, real_values, predicted_values):
+    # Function to return the coefficient of determination  - R2_score of energy
+    def energy_R2_Score(self, real_values, predicted_values):
         # Get number of unique atom types, n_types
         from ase.io import read
         step = read(real_values, "0")
@@ -161,6 +184,58 @@ class GAPModel(object):
         import numpy as np
         r = np.array(real_energies)
         p = np.array(predicted_energies)
+        mean = np.mean(r)
+
+        SQR = np.sum(np.power((r-p), 2))
+        SQT = np.sum(np.power((r-mean), 2))
+
+        R2_score = 1 - (SQR/SQT)
+
+        return R2_score
+
+    def force_RMSE(self, real_values, predicted_values):
+        # Get number of unique atom types, n_types
+        from ase.io import read
+        real_atoms = read(real_values, ':')
+        predicted_atoms = read(predicted_values, ':')
+
+        # extract data for only one species
+        real_forces, predicted_forces = [], []
+        for a_real, a_predicted in zip(real_atoms, predicted_atoms):
+            # get all atom_types
+            atom_types = a_real.get_chemical_symbols()
+            # add force for each atom
+            for j, sym in enumerate(atom_types):
+                real_forces.append(a_real.get_forces()[j])
+                predicted_forces.append(a_predicted.arrays['force'][j])
+        # Calculate Root Mean Squared Error (RMSE) of force
+        import numpy as np
+        r = np.array(real_forces)
+        p = np.array(predicted_forces)
+        RMSE = np.sqrt(np.sum(np.power(r-p, 2))/len(r))
+
+        return RMSE
+
+    # Function to return the coefficient of determination  - R2_score of energy
+    def force_R2_Score(self, real_values, predicted_values):
+        from ase.io import read
+        real_atoms = read(real_values, ':')
+        predicted_atoms = read(predicted_values, ':')
+
+        # extract data for only one species
+        real_forces, predicted_forces = [], []
+        for a_real, a_predicted in zip(real_atoms, predicted_atoms):
+            # get all atom_types
+            atom_types = a_real.get_chemical_symbols()
+            # add force for each atom
+            for j, sym in enumerate(atom_types):
+                real_forces.append(a_real.get_forces()[j])
+                predicted_forces.append(a_predicted.arrays['force'][j])
+
+        # Calculate coefficient of determination (R2_score)
+        import numpy as np
+        r = np.array(real_forces)
+        p = np.array(predicted_forces)
         mean = np.mean(r)
 
         SQR = np.sum(np.power((r-p), 2))
